@@ -20,7 +20,16 @@ app.secret_key = SECRET_KEY
 Bootstrap(app)
 
 db = SQLAlchemy(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE", "sqlite:///users.db")
+
+try:
+    URI = os.environ['DATABASE_URL']
+
+    if URI.startswith("postgres://"):
+        URI = URI.replace("postgres://", "postgresql://", 1)
+
+        app.config["SQLALCHEMY_DATABASE_URI"] = URI
+except KeyError:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 
 # LOGIN CONFIG
 login_manager = LoginManager()
