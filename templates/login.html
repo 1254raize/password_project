@@ -1,0 +1,29 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+{% include '/header.html' %}
+<body>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="container-fluid flash-body">
+
+    {% for message in messages %}
+    <p class="flashes mx-auto">{{ message }}</p>
+    {% endfor %}
+
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="container-body form-body mx-auto">
+    <h1>LOG IN</h1>
+    {{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
+</div>
+
+
+{% include '/footer.html' %}
+</body>
+
+{% endblock %}

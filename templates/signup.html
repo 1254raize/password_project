@@ -1,0 +1,94 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+{% include '/header.html' %}
+<body>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="container-fluid flash-body">
+
+    {% for message in messages %}
+    <p class="flashes mx-auto">{{ message }}</p>
+    {% endfor %}
+
+</div>
+{% endif %}
+{% endwith %}
+
+<div id="carouselExampleIndicators" class="carousel slide carousel-dark mx-auto" data-bs-interval='false'>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="form-body form-body-carousel container-body mx-auto">
+                <h1>You need a master password</h1>
+                <br>
+                <p>To secure your passwords you need a master password, a master password should be long and easy to
+                    remember</p>
+                <div class="row mx-auto">
+                    <div class="col-4 col-xs-6">
+                        <div class="password-bubble vertical-center justify-content-center">L0v3s1cK!</div>
+                    </div>
+                    <div class="col-6 col-xs-6 tip-text">
+                        This is a bad password, hard to remember and short
+                    </div>
+                    <div class="col">
+                        <i class="fa-solid fa-circle-xmark icon icon-bad justify-content-center"></i>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="row mx-auto">
+                    <div class="col-4 col-xs-6">
+                        <div class="password-bubble vertical-center justify-content-center">Up horse bring frozen
+                            chocolate!
+                        </div>
+
+                    </div>
+                    <div class="col-6 col-xs-6 tip-text">
+                        Good password, easy to remember and long
+                    </div>
+                    <div class="col">
+                        <i class="fa-solid fa-circle-check icon icon-good justify-content-center"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+
+            <div class="form-body form-body-carousel container-body mx-auto">
+                <div class="">
+                    <h1>Sign Up</h1>
+                    <br>
+                    {{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+
+    <div class="carousel-indicators indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+    </div>
+</div>
+
+
+{% include '/footer.html' %}
+<script src="{{url_for('static', filename='/js/index.js')}}"></script>
+</body>
+
+{% endblock %}

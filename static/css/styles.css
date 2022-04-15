@@ -1,0 +1,133 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.footer {
+    margin-top: auto;
+    background-color: rgb(43, 40, 40);
+    color: rgb(22, 145, 145);
+    width: 100%;
+    padding: 1rem;
+}
+
+.btn {
+    margin: 10px 10px 10px 0px
+}
+
+.container-body {
+    margin: 30px 0 0 0;
+}
+
+.form-body {
+    background-color: rgba(95, 119, 116, 0.192);
+    max-width: 70%;
+    width: 700px;
+    padding: 15px;
+    border-radius: 10px;
+    min-height: fit-content;
+}
+
+.form-body-carousel {
+    height: 450px;
+}
+
+@media screen and (max-width: 768px) {
+    .form-body {
+        max-width: 400px;
+        min-width: 400px;
+    }
+}
+
+.flashes {
+    margin: 0;
+    color: red;
+    text-align: center;
+    font-weight: 600;
+}
+
+.flash-body {
+    margin-top: 20px;
+    width: auto;
+    max-width: 20%;
+    background-color: rgba(57, 108, 145, 0.39);
+    border-radius: 10px;
+    border: solid;
+    border-color: rgba(24, 46, 61, 0.39);
+}
+
+/* .carousel {
+    max-width: 70%;
+    width: 700px;
+} */
+
+.password-bubble {
+    width: fit-content;
+    margin: 0 30px;
+    padding: 0 20px;
+    background-color: rgba(203, 147, 255, 0.534);
+    border-radius: 10px;
+}
+
+.tip-text {
+    margin: 0;
+    text-align: right;
+}
+
+.indicators {
+    position: relative;
+    bottom: 0;
+}
+
+.icon {
+    margin: 0;
+    text-align: center;
+    font-size: 3rem;
+    position: relative;
+    display: flex;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.icon-bad {
+    color: red;
+}
+
+.icon-good {
+    color: rgb(46, 216, 40);
+}
+
+
+@media screen and (max-width: 768px) {
+    .icon {
+        display: none;
+    }
+
+    .carousel {
+        padding: 0 50px;
+    }
+}
+
+.password-box {
+    margin: 20px 0 20px;
+    background-color: rgba(95, 119, 116, 0.192);
+    max-width: 70%;
+    width: fit-content;
+    padding: 15px;
+    border-radius: 10px;
+    min-height: fit-content;
+}
+
+.password-row {
+    background-color: rgba(50, 61, 60, 0.192);
+    margin: 7px;
+    border-radius: 15px;
+}
+
+.vertical-center {
+    position: relative;
+    display: flex;
+    top: 50%;
+    transform: translateY(-50%);
+}
