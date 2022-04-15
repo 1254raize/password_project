@@ -117,7 +117,10 @@ def signup():
             )
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user)
+
+            user = User.query.filter_by(email=signup_form.email.data).first()
+            login_user(user)
+            session[current_user.email] = signup_form.password.data
             return redirect(url_for('user_passwords'))
 
     return render_template('signup.html', form=signup_form, user=current_user)
