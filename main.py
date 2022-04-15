@@ -20,8 +20,7 @@ app.secret_key = SECRET_KEY
 Bootstrap(app)
 
 db = SQLAlchemy(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE", "sqlite:///users.db")
 
 # LOGIN CONFIG
 login_manager = LoginManager()
