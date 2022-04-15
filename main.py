@@ -137,7 +137,6 @@ def user_passwords():
     passwords_from_db = current_user.website_passwords
     passwords = []
     for password in passwords_from_db:
-        print(password)
         passwords.append({
             'website_name': password.website_name,
             'website_user': password.website_user,
@@ -145,13 +144,11 @@ def user_passwords():
             'website_password': (fernet.decrypt(password.website_password)).decode('utf8')
         })
 
-    print(current_user.website_passwords)
     new_password_form = NewPasswordForm()
 
     if new_password_form.validate_on_submit():
         user_pass = new_password_form.master_password.data
         if check_master_password(user_pass, current_user):
-            print('bien')
             master_password = new_password_form.master_password.data
 
             fernet = create_fernet(master_password)
@@ -176,7 +173,6 @@ def user_passwords():
             return redirect(url_for('user_passwords'))
 
         else:
-            print('mal')
 
     return render_template('userPasswords.html', user=current_user, form=new_password_form, passwords=passwords)
 
