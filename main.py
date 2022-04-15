@@ -12,16 +12,15 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 SALT = bytes(os.environ['SALT'], 'utf-8')
-print(SALT)
+
 SECRET_KEY = os.environ['SECRET_KEY']
-print(SECRET_KEY)
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
 Bootstrap(app)
 
 db = SQLAlchemy(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///users.db")
 
 # LOGIN CONFIG
 login_manager = LoginManager()
