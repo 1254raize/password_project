@@ -173,6 +173,8 @@ def user_passwords():
             return redirect(url_for('user_passwords'))
 
         else:
+            flash('Wrong Master Password')
+            return redirect(url_for('passwords'))
 
     return render_template('userPasswords.html', user=current_user, form=new_password_form, passwords=passwords)
 
