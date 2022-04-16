@@ -46,6 +46,8 @@
       }
 
 
+
+
     </style>
 
 
@@ -67,21 +69,16 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
                 </ul>
+                {% if not user.is_authenticated %}
+                <a class="btn btn-secondary" href="{{ url_for('login') }}">Log In</a>
+                <a class="btn btn-primary" href="{{ url_for('signup') }}">Sign Up</a>
+                {% else %}
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">Log Out</a>
+                <a href="{{ url_for('user_passwords') }}" class="btn btn-primary">Passwords</a>
+                {% endif %}
             </div>
-            {% if not user.is_authenticated %}
-            <a class="btn btn-secondary" href="{{ url_for('login') }}">Log In</a>
-            <a class="btn btn-primary" href="{{ url_for('signup') }}">Sign Up</a>
-            {% else %}
-            <a href="{{ url_for('logout') }}" class="btn btn-danger">Log Out</a>
-            <a href="{{ url_for('user_passwords') }}" class="btn btn-primary">Passwords</a>
-            {% endif %}
+
         </div>
     </nav>
 </header>
