@@ -33,12 +33,20 @@ body {
     height: 450px;
 }
 
+@media screen and (max-width: 500px) {
+    .form-body {
+        width: 90%;
+        height: auto;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .form-body {
         max-width: 400px;
-        min-width: 400px;
     }
 }
+
+
 
 .flashes {
     margin: 0;
@@ -130,4 +138,18 @@ body {
     display: flex;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.fa-circle-plus {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: rgba(50, 61, 60, 0.658);
+}
+
+#new-pass {
+    margin-bottom: 20px;
+}
+
+.hide {
+    display: none;
 }
