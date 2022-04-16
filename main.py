@@ -141,10 +141,7 @@ def user_passwords():
     passwords_from_db = current_user.website_passwords
     passwords = []
     for password in passwords_from_db:
-        print(password.website_password)
-        password_a = bytes(password.website_password, 'utf-8')
-        password_b = fernet.decrypt(password_a)
-        print(password_b)
+        password_b = fernet.decrypt(bytes(password.website_password, 'utf-8'))
         passwords.append({
             'website_name': password.website_name,
             'website_user': password.website_user,
