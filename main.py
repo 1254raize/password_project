@@ -141,11 +141,15 @@ def user_passwords():
     passwords_from_db = current_user.website_passwords
     passwords = []
     for password in passwords_from_db:
+        print(password.website_password)
+        password_a = bytes(password.website_password, 'utf-8')
+        password_b = fernet.decrypt(password_a)
+        print(password_b)
         passwords.append({
             'website_name': password.website_name,
             'website_user': password.website_user,
             'email': password.email,
-            'website_password': (fernet.decrypt(password.website_password)).decode('utf8')
+            'website_password': password_b.decode('utf8')
         })
 
     new_password_form = NewPasswordForm()
@@ -161,14 +165,14 @@ def user_passwords():
             website_password_b = str.encode(website_password)
 
             token_b = fernet.encrypt(website_password_b)
-            # token = token_b.decode('utf-8')
+            token = token_b.decode('utf-8')
 
             new_password = UserPasswords(
                 user=current_user,
                 website_name=new_password_form.website_name.data,
                 website_user=new_password_form.website_user.data,
                 email=new_password_form.email.data,
-                website_password=token_b,
+                website_password=token,
             )
 
             db.session.add(new_password)
@@ -178,7 +182,7 @@ def user_passwords():
 
         else:
             flash('Wrong Master Password')
-            return redirect(url_for('passwords'))
+            return redirect(url_for('user_passwords'))
 
     return render_template('userPasswords.html', user=current_user, form=new_password_form, passwords=passwords)
 
