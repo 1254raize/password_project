@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, session
+from flask import Flask, render_template, redirect, url_for, flash, session, abort
 from flask_bootstrap import Bootstrap
 from sqlalchemy.orm import relationship
 from forms import SignupForm, LoginForm, NewPasswordForm
@@ -10,6 +10,8 @@ import os
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from datetime import timedelta
+from functools import wraps
 
 SALT = bytes(os.environ['SALT'], 'utf-8')
 
@@ -34,6 +36,13 @@ except KeyError:
 # LOGIN CONFIG
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+@app.before_request
+def before_request_func():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=5)
+    session.modified = True
 
 
 @login_manager.user_loader

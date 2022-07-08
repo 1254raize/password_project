@@ -2,6 +2,16 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+
+.big-title {
+    text-align: center;
 }
 
 .footer {
@@ -46,8 +56,6 @@ body {
     }
 }
 
-
-
 .flashes {
     margin: 0;
     color: red;
@@ -56,7 +64,9 @@ body {
 }
 
 .flash-body {
-    margin-top: 20px;
+    position: absolute;
+    z-index: 10;
+    margin-top: 4rem;
     width: auto;
     max-width: 20%;
     background-color: rgba(57, 108, 145, 0.39);
@@ -152,4 +162,37 @@ body {
 
 .hide {
     display: none;
+}
+
+.round-img {
+    clip-path: circle();
+    width: 250px;
+}
+
+.testimonial {
+    min-height: 400px;
+    width: 60%;
+    padding: 20px;
+    text-align: center;
+}
+
+.bg-blue {
+    background-color: rgba(154, 213, 231, 0.212);
+}
+
+.featurette-divider {
+    margin: 0;
+    height: 100px;
+}
+
+.featurette {
+    padding: 20px;
+    width: 70%;
+}
+
+.feature-img {
+    object-fit: cover;
+    height: 500px;
+    width: 500px;
+
 }
