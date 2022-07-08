@@ -33,14 +33,14 @@ h1 {
 .form-body {
     background-color: rgba(95, 119, 116, 0.192);
     max-width: 70%;
-    width: 700px;
+    width: 800px;
     padding: 15px;
     border-radius: 10px;
     min-height: fit-content;
 }
 
 .form-body-carousel {
-    height: 450px;
+    height: 470px;
 }
 
 @media screen and (max-width: 500px) {
