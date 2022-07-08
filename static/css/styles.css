@@ -16,10 +16,10 @@ h1 {
 
 .footer {
     margin-top: auto;
-    background-color: rgb(43, 40, 40);
     color: rgb(22, 145, 145);
     width: 100%;
     padding: 1rem;
+    text-align: center;
 }
 
 .btn {

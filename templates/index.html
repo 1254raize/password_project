@@ -4,26 +4,26 @@
 
 <main>
 
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<div class="container-fluid flash-body">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="container-fluid flash-body">
 
-    {% for message in messages %}
-    <p class="flashes mx-auto">{{ message }}</p>
-    {% endfor %}
+        {% for message in messages %}
+        <p class="flashes mx-auto">{{ message }}</p>
+        {% endfor %}
 
-</div>
-{% endif %}
-{% endwith %}
-
-<div class="p-4 p-md-5 text-white bg-dark">
-    <div class="col-md-6 px-0">
-      <h1 class="fst-italic">Access your passwords anywhere</h1>
-      <p class="lead my-3">Keep all of your passwords secure in one place for easy access.</p>
-      <p class="lead my-3">Never forget a password again.</p>
-      <!-- <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p> -->
     </div>
-  </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="p-4 p-md-5 text-white bg-dark">
+        <div class="col-md-6 px-0">
+            <h1 class="fst-italic">Access your passwords anywhere</h1>
+            <p class="lead my-3">Keep all of your passwords secure in one place for easy access.</p>
+            <p class="lead my-3">Never forget a password again.</p>
+            <!-- <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p> -->
+        </div>
+    </div>
 
 
     <!-- Marketing messaging and featurettes
@@ -31,79 +31,85 @@
     <!-- Wrap the rest of the page in another container to center all the content. -->
     <div class="bg-blue">
 
-    <div class="carousel slide container-fluid rounded testimonial" data-bs-ride="carousel">
-        <div class="carousel-inner">
+        <div class="carousel slide container-fluid rounded testimonial" data-bs-ride="carousel">
+            <div class="carousel-inner">
 
-            <div class="carousel-item active">
-                <img class="round-img mx-auto d-block" src="../static/images/old man.jpg" alt="">
+                <div class="carousel-item active">
+                    <img class="round-img mx-auto d-block" src="../static/images/old man.jpg" alt="">
 
-                <h2>Samuel Smith</h2>
-                <p>I always forget my passwords, when you live such a bussy life it is easy to forget just how many subscriptions you
-                     have. Fortunatelly I don't really have to remember them anymore, they are just one click away!</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="carousel-item">
-                <img class="round-img mx-auto d-block" src="../static/images/woman.jpg" alt="">
+                    <h2>Samuel Smith</h2>
+                    <p>I always forget my passwords, when you live such a busy life it is easy to forget just how many
+                        subscriptions you
+                        have. Fortunately I don't really have to remember them anymore, they are just one click
+                        away!</p>
+                    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="carousel-item">
+                    <img class="round-img mx-auto d-block" src="../static/images/woman.jpg" alt="">
 
-                <h2>Sarah Parker</h2>
-                <p>These service has became a fundamental part of my life! As an assistant my head is already full with schedules, so this is a really bug help!</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="carousel-item">
-                <img class="round-img mx-auto d-block" src="../static/images/dog.jpg" alt="">
+                    <h2>Sarah Parker</h2>
+                    <p>This service has become a fundamental part of my life! As an assistant my head is already full of
+                        schedules, so this is a huge help!</p>
+                    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                <div class="carousel-item">
+                    <img class="round-img mx-auto d-block" src="../static/images/dog.jpg" alt="">
 
-                <h2>Rex</h2>
-                <p>My owner no longer uses my name for his passwords, WOOF WOOF!</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-        </div>
-        
-    </div><!-- /.row -->
+                    <h2>Rex</h2>
+                    <p>My owner no longer uses my name for his passwords, WOOF WOOF!</p>
+                    <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+            </div>
+
+        </div><!-- /.row -->
     </div>
 
 
-        <!-- START THE FEATURETTES -->
+    <!-- START THE FEATURETTES -->
 
-        <hr class="featurette-divider">
+    <hr class="featurette-divider">
 
-        <div class="row featurette mx-auto">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">Strong ecryption for your passwords</h2>
-                <p class="lead">No one will know your passwords,<span
+    <div class="row featurette mx-auto">
+        <div class="col-md-7">
+            <h2 class="featurette-heading">Strong encryption for your passwords</h2>
+            <p class="lead">No one will know your passwords,<span
                     class="text-muted"> not even us</span></p>
-                <p>We will ecrypt all your passwords so no one can decypher them, you have all the control over them, all you need to do is to remember
-                    your master password to get access.
-                </p>
-            </div>
-            <div class="col-md-5">
-                <img class="feature-img img-responsive" src="../static/images/encryption.jpg" alt="">
-
-            </div>
+            <p>We will ecrypt all your passwords so no one can decipher them, you have all the control over them, all
+                you need to do is to remember
+                your master password to get access.
+            </p>
         </div>
+        <div class="col-md-5">
+            <img class="feature-img img-responsive" src="../static/images/encryption.jpg" alt="">
 
-        <hr class="featurette-divider">
-        <div class="bg-blue">
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+    <div class="bg-blue">
         <div class="row featurette mx-auto">
             <div class="col-md-7 order-md-2">
                 <h2 class="featurette-heading">Oh yeah, it’s that good. <span
                         class="text-muted">See for yourself.</span></h2>
-                <p class="lead">Forget about notebooks or that sheet of paper that you keep "secret" with the passwords you forget, just log-in and look your password up!</p>
+                <p class="lead">Forget about notebooks or that sheet of paper that you keep "secret" with the passwords
+                    you forget, just log-in and look your password up!</p>
             </div>
             <div class="col-md-5 order-md-1">
                 <img class="feature-img img-responsive" src="../static/images/forgetful.jpg" alt="">
             </div>
         </div>
     </div>
-     
 
-        <!-- /END THE FEATURETTES -->
+
+    <!-- /END THE FEATURETTES -->
 
     </div><!-- /.container -->
 </main>
 {% include '/footer.html' %}
 <div class="bg-dark text-center">
-    <a href="https://www.freepik.com/vectors/cyber-threat">Cyber threat vector created by macrovector - www.freepik.com</a>
-    <a href='https://www.freepik.com/photos/fatigue'>Fatigue photo created by wayhomestudio - www.freepik.com</a>
+    <a href="https://www.freepik.com/vectors/cyber-threat">Cyber threat vector created by macrovector</a>
+    <br>
+    <a href='https://www.freepik.com/photos/fatigue'>Fatigue photo created by wayhomestudio</a>
 </div>
 
 </body>
