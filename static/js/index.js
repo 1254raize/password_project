@@ -17,10 +17,17 @@ if($('.password-confirm-div').length == 0) {
 function togglePass() {
     var target = $(event.target);
     if(target.hasClass('pass-1') == true) {
-
         var passField = $('#password');
     } else {
         var passField = $('#password_confirm');
+    }
+
+    if(target.hasClass('fa-eye') == true) {
+        target.removeClass('fa-eye');
+        target.addClass('fa-eye-slash');
+    } else {
+        target.removeClass('fa-eye-slash');
+        target.addClass('fa-eye');
     }
 
     var type = passField.prop('type');

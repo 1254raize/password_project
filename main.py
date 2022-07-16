@@ -152,6 +152,7 @@ def user_passwords():
     for password in passwords_from_db:
         password_b = fernet.decrypt(bytes(password.website_password, 'utf-8'))
         passwords.append({
+            'id': password.id,
             'website_name': password.website_name,
             'website_user': password.website_user,
             'email': password.email,
@@ -205,6 +206,17 @@ def create_fernet(master_password):
     key = base64.urlsafe_b64encode(kdf.derive(master_password_b))
     f = Fernet(key)
     return f
+
+
+@app.route('/delete-pass/<pass_id>', methods=['GET', 'POST'])
+@login_required
+def delete_password(pass_id):
+    # print(current_user.website_passwords)
+    # print(current_user.email)
+    UserPasswords.query.filter_by(id=pass_id).delete()
+    db.session.commit()
+
+    return redirect(url_for('user_passwords'))
 
 
 if __name__ == '__main__':
