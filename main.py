@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, session, abort
+from flask import Flask, render_template, redirect, url_for, flash, session, abort, request
 from flask_bootstrap import Bootstrap
 from sqlalchemy.orm import relationship
 from forms import SignupForm, LoginForm, NewPasswordForm
@@ -164,15 +164,8 @@ def user_passwords():
     if new_password_form.validate_on_submit():
         user_pass = new_password_form.master_password.data
         if check_master_password(user_pass, current_user):
-            master_password = new_password_form.master_password.data
 
-            fernet = create_fernet(master_password)
-
-            website_password = new_password_form.website_password.data
-            website_password_b = str.encode(website_password)
-
-            token_b = fernet.encrypt(website_password_b)
-            token = token_b.decode('utf-8')
+            token = create_token(new_password_form)
 
             new_password = UserPasswords(
                 user=current_user,
@@ -192,6 +185,27 @@ def user_passwords():
             return redirect(url_for('user_passwords'))
 
     return render_template('userPasswords.html', user=current_user, form=new_password_form, passwords=passwords)
+
+
+def create_token(form):
+    try:
+        master_password = form.master_password.data
+    except AttributeError:
+        master_password = form['master_password']
+
+    fernet = create_fernet(master_password)
+
+    try:
+        website_password = form.website_password.data
+    except AttributeError:
+        website_password = form['website_password']
+
+    website_password_b = str.encode(website_password)
+
+    token_b = fernet.encrypt(website_password_b)
+    token = token_b.decode('utf-8')
+
+    return token
 
 
 def create_fernet(master_password):
@@ -217,6 +231,23 @@ def delete_password(pass_id):
     db.session.commit()
 
     return redirect(url_for('user_passwords'))
+
+
+@app.route('/edit-pass/<pass_id>', methods=['GET', 'POST'])
+@login_required
+def edit_password(pass_id):
+    if request.method == 'POST':
+        form_data = request.form
+        user_pass = form_data['master_password']
+
+        if check_master_password(user_pass, current_user):
+            password_to_edit = create_token(form_data)
+            UserPasswords.query.filter_by(id=pass_id).update(dict(email=form_data['email'],
+                                                                  website_name=form_data['website_name'],
+                                                                  website_user=form_data['website_user'],
+                                                                  website_password=password_to_edit))
+            db.session.commit()
+        return redirect(url_for('user_passwords'))
 
 
 if __name__ == '__main__':
