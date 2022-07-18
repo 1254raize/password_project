@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, session, abort, request
+from flask import Flask, render_template, redirect, url_for, flash, session, abort, request, make_response, jsonify
 from flask_bootstrap import Bootstrap
 from sqlalchemy.orm import relationship
 from forms import SignupForm, LoginForm, NewPasswordForm
@@ -145,19 +145,7 @@ def logout():
 @app.route('/passwords', methods=['GET', 'POST'])
 @login_required
 def user_passwords():
-    fernet = create_fernet(session[current_user.email])
-
-    passwords_from_db = current_user.website_passwords
-    passwords = []
-    for password in passwords_from_db:
-        password_b = fernet.decrypt(bytes(password.website_password, 'utf-8'))
-        passwords.append({
-            'id': password.id,
-            'website_name': password.website_name,
-            'website_user': password.website_user,
-            'email': password.email,
-            'website_password': password_b.decode('utf8')
-        })
+    passwords = create_decoded_password()
 
     new_password_form = NewPasswordForm()
 
@@ -185,6 +173,22 @@ def user_passwords():
             return redirect(url_for('user_passwords'))
 
     return render_template('userPasswords.html', user=current_user, form=new_password_form, passwords=passwords)
+
+
+def create_decoded_password():
+    fernet = create_fernet(session[current_user.email])
+    passwords_from_db = current_user.website_passwords
+    passwords = []
+    for password in passwords_from_db:
+        password_b = fernet.decrypt(bytes(password.website_password, 'utf-8'))
+        passwords.append({
+            'id': password.id,
+            'website_name': password.website_name,
+            'website_user': password.website_user,
+            'email': password.email,
+            'website_password': password_b.decode('utf8')
+        })
+    return passwords
 
 
 def create_token(form):
@@ -248,6 +252,37 @@ def edit_password(pass_id):
                                                                   website_password=password_to_edit))
             db.session.commit()
         return redirect(url_for('user_passwords'))
+
+
+@app.route('/api-login', methods=['POST'])
+def api_login():
+    auth = request.form
+    print(auth)
+    if not auth or not auth.get('email') or not auth.get('password'):
+        return make_response(
+            'Could not verify',
+            401,
+            {'WWW-Authenticate': 'Basic-realm = "Login Required !!'}
+        )
+    else:
+        user = User.query.filter_by(email=auth.get('email')).first()
+        if check_master_password(user_pass=auth.get('password'), user=user):
+            print(user.website_passwords)
+            login_user(user)
+            session[current_user.email] = auth.get('password')
+            passwords = create_decoded_password()
+            print(passwords)
+
+            return make_response(
+                jsonify(passwords),
+                200
+            )
+        else:
+            return make_response(
+                'Wrong Master Password',
+                401,
+                {'WWW-Authenticate': 'Basic-realm = "Wrong Master Password !!"'}
+            )
 
 
 if __name__ == '__main__':
