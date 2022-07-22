@@ -313,6 +313,7 @@ def api_add():
     else:
         user = User.query.filter_by(email=new_password_form.get('email')).first()
         if check_master_password(user_pass=new_password_form.get('master_password'), user=user):
+            login_user(user)
             print(new_password_form)
             print(new_password_form['master_password'])
             token = create_token(new_password_form)
