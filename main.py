@@ -302,7 +302,6 @@ def api_login():
 
 
 @app.route('/api-add', methods=['POST'])
-@login_required
 def api_add():
     new_password_form = request.form.to_dict()
     if not new_password_form or not new_password_form.get('email') or not new_password_form.get('master_password'):
@@ -312,7 +311,8 @@ def api_add():
             {'WWW-Authenticate': 'Basic-realm = "Form is incomplete'}
         )
     else:
-        if check_master_password(user_pass=new_password_form.get('master_password'), user=current_user):
+        user = User.query.filter_by(email=new_password_form.get('email')).first()
+        if check_master_password(user_pass=new_password_form.get('master_password'), user=user):
             print(new_password_form)
             print(new_password_form['master_password'])
             token = create_token(new_password_form)
@@ -336,5 +336,7 @@ def api_add():
 if __name__ == '__main__':
     app.run(debug=True)
 
+# TODO REMOVE PRINTS
+# TODO ERASE DATABASE FROM HEROKU
 # TODO CHANGE THE SESSION OBJECT SO THE STORED PASSWORD IS ALSO ENCRYPTED
 # TODO MAKE IT SO ALL FORMS HAVE THE SAME DATATYPE
