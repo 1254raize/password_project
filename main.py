@@ -155,13 +155,7 @@ def user_passwords():
 
             token = create_token(new_password_form)
 
-            new_password = UserPasswords(
-                user=current_user,
-                website_name=new_password_form.website_name.data,
-                website_user=new_password_form.website_user.data,
-                email=new_password_form.email.data,
-                website_password=token,
-            )
+            new_password = create_new_password(new_password_form, token)
 
             db.session.add(new_password)
             db.session.commit()
@@ -173,6 +167,26 @@ def user_passwords():
             return redirect(url_for('user_passwords'))
 
     return render_template('userPasswords.html', user=current_user, form=new_password_form, passwords=passwords)
+
+
+def create_new_password(new_password_form, token):
+    try:
+        new_password = UserPasswords(
+            user=current_user,
+            website_name=new_password_form.website_name.data,
+            website_user=new_password_form.website_user.data,
+            email=new_password_form.email.data,
+            website_password=token,
+        )
+    except AttributeError:
+        new_password = UserPasswords(
+            user=current_user,
+            website_name=new_password_form['website_name'],
+            website_user=new_password_form['website_user'],
+            email=new_password_form['email'],
+            website_password=token,
+        )
+    return new_password
 
 
 def create_decoded_password():
@@ -195,6 +209,7 @@ def create_token(form):
     try:
         master_password = form.master_password.data
     except AttributeError:
+
         master_password = form['master_password']
 
     fernet = create_fernet(master_password)
@@ -202,6 +217,7 @@ def create_token(form):
     try:
         website_password = form.website_password.data
     except AttributeError:
+
         website_password = form['website_password']
 
     website_password_b = str.encode(website_password)
@@ -285,5 +301,40 @@ def api_login():
             )
 
 
+@app.route('/api-add', methods=['POST'])
+@login_required
+def api_add():
+    new_password_form = request.form.to_dict()
+    if not new_password_form or not new_password_form.get('email') or not new_password_form.get('master_password'):
+        return make_response(
+            'Could not verify',
+            401,
+            {'WWW-Authenticate': 'Basic-realm = "Form is incomplete'}
+        )
+    else:
+        if check_master_password(user_pass=new_password_form.get('master_password'), user=current_user):
+            print(new_password_form)
+            print(new_password_form['master_password'])
+            token = create_token(new_password_form)
+            new_password = create_new_password(new_password_form, token)
+            db.session.add(new_password)
+            db.session.commit()
+
+            return make_response(
+                'New Password added successfully!!',
+                200,
+                {'WWW-Authenticate': 'Basic-realm = "New Password added successfully!!"'}
+            )
+        else:
+            return make_response(
+                'Wrong Master Password!!',
+                400,
+                {'WWW-Authenticated': 'Basic-realm = "Wrong Master Password"'}
+            )
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+# TODO CHANGE THE SESSION OBJECT SO THE STORED PASSWORD IS ALSO ENCRYPTED
+# TODO MAKE IT SO ALL FORMS HAVE THE SAME DATATYPE
