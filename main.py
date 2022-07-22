@@ -278,7 +278,7 @@ def api_login():
         return make_response(
             'Could not verify',
             401,
-            {'WWW-Authenticate': 'Basic-realm = "Login Required !!'}
+            {'WWW-Authenticate': 'Basic-realm = Login Required !!'}
         )
     else:
         user = User.query.filter_by(email=auth.get('email')).first()
@@ -297,7 +297,7 @@ def api_login():
             return make_response(
                 'Wrong Master Password',
                 401,
-                {'WWW-Authenticate': 'Basic-realm = "Wrong Master Password !!"'}
+                {'WWW-Authenticate': 'Basic-realm = Wrong Master Password !!'}
             )
 
 
@@ -308,7 +308,7 @@ def api_add():
         return make_response(
             'Could not verify',
             401,
-            {'WWW-Authenticate': 'Basic-realm = "Form is incomplete'}
+            {'WWW-Authenticate': 'Basic-realm = Form is incomplete'}
         )
     else:
         user = User.query.filter_by(email=new_password_form.get('email')).first()
@@ -324,13 +324,13 @@ def api_add():
             return make_response(
                 'New Password added successfully!!',
                 200,
-                {'WWW-Authenticate': 'Basic-realm = "New Password added successfully!!"'}
+                {'WWW-Authenticate': 'Basic-realm = New Password added successfully!!'}
             )
         else:
             return make_response(
                 'Wrong Master Password!!',
                 400,
-                {'WWW-Authenticated': 'Basic-realm = "Wrong Master Password"'}
+                {'WWW-Authenticated': 'Basic-realm = Wrong Master Password'}
             )
 
 
